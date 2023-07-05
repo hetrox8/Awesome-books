@@ -1,0 +1,62 @@
+body {
+  margin: auto;
+}
+
+hr.line1 {
+  border-top: 1px solid black;
+  width: 10%;
+  margin: 20px auto;
+}
+
+h1.heading,
+h2.heading {
+  text-align: center;
+}
+
+.book-list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  font-size: 0.8rem;
+  margin: 15px 0;
+  width: 500px;
+  border: 1px solid black;
+}
+
+.container-home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.book-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 500px;
+}
+
+.book-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  width: 300px;
+  margin: 20px auto;
+}
+
+.btn-submit {
+  width: 60px;
+  height: 30px;
+  margin-top: 10px;
+}
+
+.book-list:nth-child(even) {
+  background-color: silver;
+}
+
+.book-list:nth-child(odd) {
+  background-color: white;
+}

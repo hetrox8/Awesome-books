@@ -53,10 +53,3 @@ h2.heading {
   margin-top: 10px;
 }
 
-.book-list:nth-child(even) {
-  background-color: silver;
-}
-
-.book-list:nth-child(odd) {
-  background-color: white;
-}

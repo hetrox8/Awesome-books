@@ -1,33 +1,31 @@
-class thisBook {
-  // Make sure if the local storage in empty than add an empty array
+class BookManager {
   static getStoredBooks() {
-    if (localStorage.getItem('Added books') === null) {
-      localStorage.setItem('Added books', JSON.stringify([]));
+    if (localStorage.getItem('AddedBooks') === null) {
+      localStorage.setItem('AddedBooks', JSON.stringify([]));
     }
-    return JSON.parse(localStorage.getItem('Added books'));
+    return JSON.parse(localStorage.getItem('AddedBooks'));
   }
 
-  // Store the books data into the local storage
   static updateStoredBooks(books) {
-    localStorage.setItem('Added books', JSON.stringify(books));
+    localStorage.setItem('AddedBooks', JSON.stringify(books));
   }
 
   static addNewBook(bookTitle, bookAuthor) {
-    const storedBooks = thisBook.getStoredBooks();
+    const storedBooks = BookManager.getStoredBooks();
     const newBook = {
       title: bookTitle,
       author: bookAuthor,
     };
     storedBooks.push(newBook);
-    thisBook.updateStoredBooks(storedBooks);
-    thisBook.displayBooks(storedBooks);
+    BookManager.updateStoredBooks(storedBooks);
+    BookManager.displayBooks(storedBooks);
   }
 
   static removeBook(i) {
-    const storedBooks = thisBook.getStoredBooks();
+    const storedBooks = BookManager.getStoredBooks();
     storedBooks.splice(i, 1);
-    thisBook.updateStoredBooks(storedBooks);
-    thisBook.displayBooks();
+    BookManager.updateStoredBooks(storedBooks);
+    BookManager.displayBooks();
   }
 
   static createBookListHTML(books) {
@@ -35,33 +33,35 @@ class thisBook {
     for (let i = 0; i < books.length; i += 1) {
       const { title, author } = books[i];
       bookListHTML += `
-      <div class= "booklist">
-      <p>"${title}" by "${author}"</p>
-      <button onClick="thisBook.removeBook(${i})">Remove</button>
+      <div class="book-list">
+        <p>"${title}" by "${author}"</p>
+        <button onClick="BookManager.removeBook(${i})">Remove</button>
       </div>
       `;
     }
     return bookListHTML;
   }
 
-  // Displaying the books on the UI from localStorage
   static displayBooks() {
-    const listOfBooks = document.querySelector('.container');
-    const storedBooks = thisBook.getStoredBooks();
-    const bookListHTML = thisBook.createBookListHTML(storedBooks);
-    listOfBooks.innerHTML = `
-        <ul class="book-ul">${bookListHTML}</ul>
-      `;
+    const bookContainer = document.querySelector('.book-container');
+    const storedBooks = BookManager.getStoredBooks();
+    const bookListHTML = BookManager.createBookListHTML(storedBooks);
+    bookContainer.innerHTML = `
+      <ul class="book-ul">${bookListHTML}</ul>
+    `;
   }
 }
 
-// Get values from input fields
-const form = document.querySelector('form');
-form.addEventListener('submit', (e) => {
-  const title = document.querySelector('.title');
-  const author = document.querySelector('.author');
+const bookForm = document.querySelector('.book-form');
+bookForm.addEventListener('submit', (e) => {
   e.preventDefault();
-  thisBook.addNewBook(title.value, author.value);
+  const bookTitleInput = document.querySelector('.book-title');
+  const bookAuthorInput = document.querySelector('.book-author');
+  const bookTitle = bookTitleInput.value;
+  const bookAuthor = bookAuthorInput.value;
+  BookManager.addNewBook(bookTitle, bookAuthor);
+  bookTitleInput.value = '';
+  bookAuthorInput.value = '';
 });
 
-thisBook.displayBooks();
+BookManager.displayBooks();
